@@ -23,54 +23,10 @@ namespace Project
 			Console.Write(a.ToString());
 			a.Remove(0);
 			Console.Write(a.ToString());
-
+			a.Remove(123); // что если так
+            int q = a[54]; // или так
+            //a.Add(12).Remove(2).Add(4); // хочу так
 			Console.ReadKey();
-		}
-
-		private static void WritearrayConsole(IList<int> array)
-		{
-          for (int i = 0; i < array.Count; i++)
-			{
-				Console.Write(value: $"{array[i]} ");
-			}
-			Console.WriteLine();
-		}
-
-		private static void ReadarrayConsole(IList<int> array)
-		{
-			for (int i = 0; i < array.Count; i++)
-			{
-				array[i] = array.Count - i;
-			}
-		}
-
-		private static void Cicle()
-		{
-			for (int i = 99; i >= 0; i--)
-			{
-				Console.Write(value: $"{i}:{99 - i}{(i == 0 ? "" : " ")}");
-			}
-		}
-
-		private static void Sort(IList<int> array)
-		{
-			for (int i = 0; i < array.Count; i++)
-			{
-				for (int j = 0; j < array.Count - i - 1; j++)
-				{
-					if (array[j] > array[j + 1])
-					{
-						int temp = array[j];
-						array[j] = array[j + 1];
-						array[j + 1] = temp;
-					}
-				}
-				WritearrayConsole(array);
-			}
-		}
-		private static void Newarr(int[] array)
-		{
-
 		}
 	}
 }
