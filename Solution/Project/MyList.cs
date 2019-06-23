@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Project
 {
-	class MyList
+	class MyList 
 	{
-		IntItem last;
-		IntItem first;
-		public int Count;
+		private IntItem last;
+		private IntItem first;
+		private int count;
 		public int this[int index]
 		{
 			get
 			{
 				IntItem temp = first;
-				for (int i = 0; i < index - 1; i++)
+				for (int i = 0; i < index; i++) // Раньше было (int i = 0; i < index - 1; i++) и не выводило ласт элемент
 				{
 					temp = temp.next;
 				}
@@ -28,22 +28,76 @@ namespace Project
 		public void Add(int item)
 		{
 			IntItem temp = new IntItem(item);
-			temp.prev = last;
 			if(last != null)
 			{
 				last.next = temp;
+				temp.prev = last;
 			}
-			last = temp;
-			if (Count == 0)
+			if (count == 0)
 			{
 				first = temp;
 			}
-			Count++;
+			last = temp;
+			count++;
 		}
 
+		public void Remove(int index)
+		{
+			IntItem removed = first;
+			//remove first
+			if (index == 0)
+			{
+				first = first.next;
+				first.prev = null;
+				count--;
+				return;
+			}
+			// remove last
+			if (index == count)
+			{
+				last = last.prev;
+				last.next = null;
+				count--;
+				return;
+			}
+			// remove from middle 
+			for (int i = 0; i < index; i++)
+			{
+				removed = removed.next;
+			}
+			removed.prev.next = removed.next;
+			removed.next.prev = removed.prev;
+
+			count--;
+		}
+
+		public int Size()
+		{
+			return count;
+		}
+
+		public bool IsEmpty()
+		{
+			return Size() == 0;
+		}
+
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+			IntItem temp = first;
+			for (int i = 0; i < Size(); i++)
+			{
+				sb.Append(temp.value).Append(" ");
+				temp = temp.next;
+			}
+			sb.Append("\n");
+			return sb.ToString();
+		}
 
 		// TODO: Remove(5);
 		// TODO: ToString();
 		// TODO: Sort();
 	}
 }
+
+

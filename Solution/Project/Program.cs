@@ -15,17 +15,21 @@ namespace Project
 			a.Add(21);
 			a.Add(22);
 			a.Add(123);
-			for (int i = 0; i < a.Count; i++)
-			{
-				Console.Write(value: $"{a[i]} ");
-			}
+			a.Add(99);
+			a.Add(45);
+			a.Add(-7);
+			Console.Write(a.ToString());
+			a.Remove(4);
+			Console.Write(a.ToString());
+			a.Remove(0);
+			Console.Write(a.ToString());
 
 			Console.ReadKey();
 		}
 
 		private static void WritearrayConsole(IList<int> array)
 		{
-			for (int i = 0; i < array.Count; i++)
+          for (int i = 0; i < array.Count; i++)
 			{
 				Console.Write(value: $"{array[i]} ");
 			}
