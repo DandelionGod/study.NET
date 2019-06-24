@@ -10,21 +10,31 @@ namespace Project
 	{
 		private IntItem last;
 		private IntItem first;
-		private int count;  // слитая каша, старайся разделять пустыми строками логические блоки твоего кода.
-                            // например по 2 пустых между методами, 3 между полями и методами, по 1 между логическими блоками полей
+		private int count;  
+		
+		
 		public int this[int index]
 		{
 			get
 			{
 				IntItem temp = first;
-				for (int i = 0; i < index; i++) // согласен
+				for (int i = 0; i < index; i++)
 				{
 					temp = temp.next;
 				}
 				return temp.value;
 			}
-			set { /* set the specified index to value here */ } ///раз ты им не пользуешься то зачем это тут
 		}
+
+
+		public int Count
+		{
+			get
+			{
+				return count;
+			}
+		}
+
 
 		public void Add(int item)
 		{
@@ -42,9 +52,11 @@ namespace Project
 			count++;
 		}
 
+
 		public void Remove(int index)
 		{
 			IntItem removed = first;
+			
 			//remove first
 			if (index == 0)
 			{
@@ -53,6 +65,7 @@ namespace Project
 				count--;
 				return;
 			}
+			
 			// remove last
 			if (index == count)
 			{
@@ -61,32 +74,33 @@ namespace Project
 				count--;
 				return;
 			}
+			
 			// remove from middle 
 			for (int i = 0; i < index; i++)
 			{
 				removed = removed.next;
 			}
-			removed.prev.next = removed.next; // very nice!
-			removed.next.prev = removed.prev; // very nice!
-            // забыл еще почистить ссылки самого удаленного обхекта, что бы они указывали на ничто
+
+			removed.prev.next = removed.next;
+			removed.next.prev = removed.prev;
+			removed.next = null;
+			removed.prev = null;
+
 			count--;
 		}
 
-		public int Size() // это можно привратить в свойство
+
+		public bool IsEmpty() // возвращает размер и проверяет пустой ли список, так как поля теперь приватные
 		{
-			return count;
+			return Count == 0;
 		}
 
-		public bool IsEmpty() // это тут для чего?
-		{
-			return Size() == 0;
-		}
 
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder(); // он тут тебе не нужен, можно обойтись обычным стринг типом
 			IntItem temp = first;
-			for (int i = 0; i < Size(); i++)
+			for (int i = 0; i < Count; i++)
 			{
 				sb.Append(temp.value).Append(" ");
 				temp = temp.next;
@@ -94,6 +108,7 @@ namespace Project
 			sb.Append("\n");
 			return sb.ToString();
 		}
+
 
 		// TODO: Remove(5);
 		// TODO: ToString();

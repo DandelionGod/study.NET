@@ -23,8 +23,8 @@ namespace Project
 			Console.Write(a.ToString());
 			a.Remove(0);
 			Console.Write(a.ToString());
-			a.Remove(123); // что если так
-            int q = a[54]; // или так
+			//a.Remove(123); // что если так
+            //int q = a[54]; // или так
             //a.Add(12).Remove(2).Add(4); // хочу так
 			Console.ReadKey();
 		}
