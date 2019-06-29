@@ -6,22 +6,27 @@ using System.Threading.Tasks;
 
 namespace Project
 {
-	class MyList
+	class MyList 
 	{
-		private IntItem last;
-		private IntItem first;
+		private IItem last;
+		private IItem first;
 
 
-		public int this[int index]
+		public IItem this[int index]
 		{
 			get
 			{
-				IntItem temp = first;
+				if (Count < index)
+				{
+					throw new IndexOutOfRangeException();
+				}
+
+				IItem temp = first;
 				for (int i = 0; i < index; i++)
 				{
 					temp = temp.next;
 				}
-				return temp.value;
+				return temp;
 			}
 		}
 
@@ -31,9 +36,9 @@ namespace Project
 
 		public int Count { get; set; }
 
-		public void Add(int item)
+		public MyList Add(int item)
 		{
-			IntItem temp = new IntItem(item);
+			IItem temp = new IntItem(item);
 			if (last != null)
 			{
 				last.next = temp;
@@ -45,12 +50,35 @@ namespace Project
 			}
 			last = temp;
 			Count++;
+			return this;
 		}
 
 
-		public void Remove(int index)
+		public MyList Add(IItem item)
 		{
-			IntItem removed = first;
+			if (last != null)
+			{
+				last.next = item;
+				item.prev = last;
+			}
+			if (IsEmpty)
+			{
+				first = item;
+			}
+			last = item;
+			Count++;
+			return this;
+		}
+
+
+		public MyList Remove(int index)
+		{
+			if (Count < index)
+			{
+				return this;
+			}
+
+			IItem removed = first;
 
 			//remove first
 			if (index == 0)
@@ -58,7 +86,7 @@ namespace Project
 				first = first.next;
 				first.prev = null;
 				Count--;
-				return;
+				return this;
 			}
 
 			// remove last
@@ -67,7 +95,7 @@ namespace Project
 				last = last.prev;
 				last.next = null;
 				Count--;
-				return;
+				return (this);
 			}
 
 			// remove from middle 
@@ -82,63 +110,85 @@ namespace Project
 			removed.prev = null;
 
 			Count--;
+			return this;
 		}
 
 
 		public override string ToString()
 		{
-			StringBuilder sb = new StringBuilder(); // он тут тебе не нужен, можно обойтись обычным стринг типом
-			IntItem temp = first;
+			string s = "";
+			IItem temp = first;
 			for (int i = 0; i < Count; i++)
 			{
-				sb.Append(temp.value).Append(" ");
-				temp = temp.next;
+				if (temp != null)
+				{
+					s += temp.ToString() + " ";
+					temp = temp.next;
+				}
+				else
+				{
+					s += "null ";
+				}
 			}
-			sb.Append("\n");
-			return sb.ToString();
+			s += "\n";
+			return s;
 		}
 
 
-		public void Sort()
+		//public void Sort()
+		//{
+		//	Console.WriteLine(this.ToString());
+		//	IItem i = first;
+
+		//	while (i != null)
+		//	{
+		//		IItem j = first;
+		//		while (j != null && j.next != null)
+		//		{
+		//			if (j.value > j.next.value)
+		//			{
+		//				this.Swap(j, j.next);
+		//				Console.WriteLine(this.ToString());
+		//			}
+		//			j = j.next;
+		//		}
+		//		i = i.next;
+		//	}
+		//}
+
+
+		private void Swap(IItem i, IItem j)
 		{
-			IntItem i = first;
-			while (i != last.next)
+			IItem temp;
+			if (i.prev != null)
 			{
-				IntItem j = i.next;
-				while (j !=last.next)
-				{
-					if (i.value > j.value)
-					{
-						IntItem temp = new IntItem(i.value);
-						//IntItem temp = i;
-						temp.next = i.next;
-						temp.prev = i.prev;
-						if (i.prev == null)
-						{
-							first = j;
-						}
-						if (j.next == null)
-						{
-							last = i;
-						}
-						i.next = j.next;
-						i.prev = j;
-						i.next.prev = i;
-						j.prev.next = j; //= temp.next
-						j.next = i;
-						j.prev = temp.prev;
-
-
-						//i.next = i.next.next;
-						//i.next.prev = temp;
-						//temp = i.prev;
-						//i.prev = i.next.prev;
-						//i.next.prev = temp;
-					}
-					j = j.next;
-				}
-				i = i.next;
+				i.prev.next = j;
 			}
+			else
+			{
+				first = j;
+			}
+
+			j.prev = i.prev;
+			temp = j.next;
+			j.next = i;
+			i.next = temp;
+			i.prev = j;
+
+			if (temp != null)
+			{
+				temp.prev = i;
+			}
+			else
+			{
+				last = i;
+			}
+		}
+
+
+		public static void Create (out MyList myList)
+		{
+			myList = new MyList();
 		}
 	}
 }
