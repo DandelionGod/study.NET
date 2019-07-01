@@ -25,7 +25,7 @@ namespace Project
 			//a.Clear();
 			//Console.Write(a.ToString());
 
-			
+			a.AddRange(2, 10);
 			
 			Console.Write(a.ToString());
 

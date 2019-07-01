@@ -367,18 +367,17 @@ namespace Project
 		}
 
 
-		//public void AddRange(int n, int[] array)
-		//{
-		//	int[] arr = new int[n];
-		//	arr = array;
-		//	IntItem temp = first;
-		//	IntItem item = first;
-		//	for (int i = 0; i < Count; i++)
-		//	{
-		//		item = arr[i];
-		//		temp = temp.next;
-		//	}
-		//}
+		public void AddRange(int index, int item)
+		{
+			IntItem temp = first;
+			
+			for (int i = 0; i < index + 1; i++)
+			{
+				temp.value = item;
+				temp = temp.next;
+			}
+
+		}
 
 
 		// TODO: AddRange(5);
