@@ -9,14 +9,24 @@ namespace Project
     {
         static void Main(string[] args)
 		{
-			List<int> q;
+			//List<int> q;
 			
 
 			MyList.Create(out MyList a);
 			//int q = a[54]; // или так
 			Console.Write(a.ToString());
-			a.Add(12).Remove(2).Add(4);
-			a.Add(new FloatItem(-32.34f)).Add(new DoubleItem(32.5));
+			a.Add(6).Add(2).Add(5).Add(-2).Add(1).Add(3).Add(2).Add(2);
+			Console.Write(a.ToString());
+			a.Contains(2);
+			a.Find(7);
+			a.FindLast(7);
+			a.FindIndex(2);
+			a.FindLastIndex(3);
+			//a.Clear();
+			//Console.Write(a.ToString());
+
+			
+			
 			Console.Write(a.ToString());
 
 			Console.ReadKey();

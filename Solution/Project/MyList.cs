@@ -8,11 +8,11 @@ namespace Project
 {
 	class MyList 
 	{
-		private IItem last;
-		private IItem first;
+		private IntItem last;
+		private IntItem first;
 
 
-		public IItem this[int index]
+		public int this[int index]
 		{
 			get
 			{
@@ -21,12 +21,12 @@ namespace Project
 					throw new IndexOutOfRangeException();
 				}
 
-				IItem temp = first;
+				IntItem temp = first;
 				for (int i = 0; i < index; i++)
 				{
 					temp = temp.next;
 				}
-				return temp;
+				return temp.value;
 			}
 		}
 
@@ -34,11 +34,13 @@ namespace Project
 		public bool IsEmpty
 		{ get => Count == 0; }
 
+
 		public int Count { get; set; }
+
 
 		public MyList Add(int item)
 		{
-			IItem temp = new IntItem(item);
+			IntItem temp = new IntItem(item);
 			if (last != null)
 			{
 				last.next = temp;
@@ -54,21 +56,21 @@ namespace Project
 		}
 
 
-		public MyList Add(IItem item)
-		{
-			if (last != null)
-			{
-				last.next = item;
-				item.prev = last;
-			}
-			if (IsEmpty)
-			{
-				first = item;
-			}
-			last = item;
-			Count++;
-			return this;
-		}
+		//public MyList Add(IntItem item)
+		//{
+		//	if (last != null)
+		//	{
+		//		last.next = item;
+		//		item.prev = last;
+		//	}
+		//	if (IsEmpty)
+		//	{
+		//		first = item;
+		//	}
+		//	last = item;
+		//	Count++;
+		//	return this;
+		//}
 
 
 		public MyList Remove(int index)
@@ -78,7 +80,7 @@ namespace Project
 				return this;
 			}
 
-			IItem removed = first;
+			IntItem removed = first;
 
 			//remove first
 			if (index == 0)
@@ -95,7 +97,7 @@ namespace Project
 				last = last.prev;
 				last.next = null;
 				Count--;
-				return (this);
+				return this;
 			}
 
 			// remove from middle 
@@ -117,7 +119,7 @@ namespace Project
 		public override string ToString()
 		{
 			string s = "";
-			IItem temp = first;
+			IntItem temp = first;
 			for (int i = 0; i < Count; i++)
 			{
 				if (temp != null)
@@ -135,31 +137,31 @@ namespace Project
 		}
 
 
-		//public void Sort()
-		//{
-		//	Console.WriteLine(this.ToString());
-		//	IItem i = first;
-
-		//	while (i != null)
-		//	{
-		//		IItem j = first;
-		//		while (j != null && j.next != null)
-		//		{
-		//			if (j.value > j.next.value)
-		//			{
-		//				this.Swap(j, j.next);
-		//				Console.WriteLine(this.ToString());
-		//			}
-		//			j = j.next;
-		//		}
-		//		i = i.next;
-		//	}
-		//}
-
-
-		private void Swap(IItem i, IItem j)
+		public void Sort()
 		{
-			IItem temp;
+			Console.WriteLine(this.ToString());
+			IntItem i = first;
+
+			while (i != null)
+			{
+				IntItem j = first;
+				while (j != null && j.next != null)
+				{
+					if (j.value > j.next.value)
+					{
+						this.Swap(j, j.next);
+						Console.WriteLine(this.ToString());
+					}
+					j = j.next;
+				}
+				i = i.next;
+			}
+		}
+
+
+		private void Swap(IntItem i, IntItem j)
+		{
+			IntItem temp;
 			if (i.prev != null)
 			{
 				i.prev.next = j;
@@ -190,9 +192,202 @@ namespace Project
 		{
 			myList = new MyList();
 		}
+
+
+		public void Contains(int item)
+		{
+			if (IsEmpty)
+			{
+				Console.WriteLine("MyList is empty");
+				return;
+			}
+
+			IntItem temp = first;
+
+			for (int i = 0; i < Count; i++)
+			{
+				if (temp.value == item)
+				{
+					Console.WriteLine();
+					Console.Write(value: $"item {item} inside \n");
+					return;
+				}
+				temp = temp.next;
+			}
+			Console.WriteLine();
+			Console.Write(value: $"item {item} is absent \n");
+		}
+
+
+		public void Find(int item)
+		{
+			if (IsEmpty)
+			{
+				Console.WriteLine("MyList is empty");
+				return;
+			}
+
+			IntItem temp = first;
+			for (int i = 0; i < Count; i++)
+			{
+				if (temp.value == item)
+				{
+					Console.WriteLine();
+					Console.Write(value: $"{item} has been finded \n");
+					return;
+				}
+				temp = temp.next;
+			}
+			Console.WriteLine();
+			Console.Write(value: $"{item} is not found \n");
+		}
+
+
+		public void FindLast(int item)
+		{
+			if (IsEmpty)
+			{
+				Console.WriteLine("MyList is empty");
+				return;
+			}
+
+			IntItem temp = last;
+			for (int i = Count; i > 0; i--)
+			{
+				if (temp.value == item)
+				{
+					Console.WriteLine();
+					Console.Write(value: $"{item} has been finded \n");
+					return;
+				}
+				temp = temp.prev;
+			}
+			Console.WriteLine();
+			Console.Write(value: $"{item} is not found \n");
+		}
+
+
+		public void FindIndex(int index)
+		{
+			if (IsEmpty)
+			{
+				Console.WriteLine("MyList is empty");
+				return;
+			}
+
+			IntItem item = first;
+			int count = 0;
+
+			for (int i = 0; i < Count; i++)
+			{
+				if (count == index)
+				{
+					Console.WriteLine();
+					Console.Write(value: $"inex: {index} item: {item} \n");
+					return;
+				}
+				item = item.next;
+				count++;
+			}
+			Console.WriteLine();
+			Console.Write(value: $"index {index} not found \n");
+		}
+
+
+		public void FindLastIndex(int index)
+		{
+			if (IsEmpty)
+			{
+				Console.WriteLine("MyList is empty");
+				return;
+			}
+
+			IntItem item = last;
+			int count = Count - 1;
+
+			for (int i = Count; i > 0; i--)
+			{
+				if (count == index)
+				{
+					Console.WriteLine();
+					Console.Write(value: $"inex: {index} item: {item} \n");
+					return;
+				}
+				item = item.prev;
+				count--;
+			}
+			Console.WriteLine();
+			Console.Write(value: $"index {index} not found \n");
+		}
+
+
+		//public void FindAll(int item)
+		//{
+		//	if (IsEmpty)
+		//	{
+		//		Console.WriteLine("MyList is empty");
+		//		return;
+		//	}
+
+		//	IntItem temp = first;
+		//	//IntItem newItem = null;
+		//	//Create(out MyList myList);
+
+		//	for (int i = 0; i < Count; i++)
+		//	{
+		//		if (temp.value == item)
+		//		{
+		//			Console.WriteLine();
+		//			Console.Write(value: $"{item} has been finded \n");
+					
+		//		}
+		//		temp = temp.next;
+		//	}
+		//	Console.WriteLine();
+		//	Console.Write(value: $"{item} is not found \n");
+		//}
+
+
+		public void Clear()
+		{
+			if (IsEmpty)
+			{
+				Console.WriteLine("MyList is empty");
+				return;
+			}
+
+			IntItem temp = first.next;
+			first = null;
+			for (int i = 0; i < Count - 1; i++)
+			{
+				temp.prev.next = null;
+				temp.prev = null;
+				temp = temp.next;
+			}
+		}
+
+
+		//public void AddRange(int n, int[] array)
+		//{
+		//	int[] arr = new int[n];
+		//	arr = array;
+		//	IntItem temp = first;
+		//	IntItem item = first;
+		//	for (int i = 0; i < Count; i++)
+		//	{
+		//		item = arr[i];
+		//		temp = temp.next;
+		//	}
+		//}
+
+
+		// TODO: AddRange(5);
+		// TODO: Clear();
+		// TODO: Contains(2);
+		// TODO: Find(2);
+		// TODO: FindIndex(-1);
+		// TODO: FindLast();
+		// TODO: FindLastIndex();
+		// TODO: FindAll();
 	}
 }
-
-		// TODO: Remove(5);
-		// TODO: ToString();
-		// TODO: Sort();
