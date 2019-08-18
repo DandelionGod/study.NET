@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project
 {
-	class MyList 
+	class MyList
 	{
 		private IntItem last;
 		private IntItem first;
@@ -30,10 +30,9 @@ namespace Project
 			}
 		}
 
-
-		public bool IsEmpty
-		{ get => Count == 0; }
-
+		
+		public bool IsEmpty => Count == 0;
+		
 
 		public int Count { get; set; }
 
@@ -72,8 +71,44 @@ namespace Project
 		//	return this;
 		//}
 
+		public MyList Remove(int value)
+		{
+			IntItem removed = first;
+			
+			//// remove first
+			//if (value == removed.value)
+			//{
+			//	first = first.next;
+			//	first.prev = null;
+			//	Count--;
+			//	return this;
+			//}
+			//removed = removed.next;
 
-		public MyList Remove(int index)
+			// remove from middle
+			for (int i = 0; i < Count; i++)
+			{
+				if (value == removed.value)
+				{
+					Remove(removed);
+					Count--;
+					return this;
+				}
+				removed = removed.next;
+			}
+
+			//// remove last
+			//if (value == removed.value)
+			//{
+			//	last = last.prev;
+			//	last.next = null;
+			//	Count--;
+			//	return this;
+			//}
+			return this;
+		}
+
+		public MyList RemoveAt(int index)
 		{
 			if (Count < index)
 			{
@@ -106,19 +141,44 @@ namespace Project
 				removed = removed.next;
 			}
 
-			removed.prev.next = removed.next;
-			removed.next.prev = removed.prev;
-			removed.next = null;
-			removed.prev = null;
+			Remove(removed);
 
 			Count--;
 			return this;
 		}
 
+		private void Remove(IntItem removed)
+		{
+			if (removed == null)
+			{
+				return;
+			}
+
+			if (removed.prev == null)
+			{
+				first = removed.next;
+			}
+			else
+			{
+				removed.prev.next = removed.next;
+			}
+
+			if (removed.next == null)
+			{
+				last = removed.prev;
+			}
+			else
+			{
+				removed.next.prev = removed.prev;
+			}
+
+			removed.next = null;
+			removed.prev = null;
+		}
 
 		public override string ToString()
 		{
-			string s = "";
+			string s = "Collection: ";
 			IntItem temp = first;
 			for (int i = 0; i < Count; i++)
 			{
@@ -132,7 +192,6 @@ namespace Project
 					s += "null ";
 				}
 			}
-			s += "\n";
 			return s;
 		}
 
@@ -188,18 +247,17 @@ namespace Project
 		}
 
 
-		public static void Create (out MyList myList)
+		public static void Create(out MyList myList)
 		{
 			myList = new MyList();
 		}
 
 
-		public void Contains(int item)
+		public bool Contains(int item)
 		{
 			if (IsEmpty)
 			{
-				Console.WriteLine("MyList is empty");
-				return;
+				return false;
 			}
 
 			IntItem temp = first;
@@ -208,23 +266,19 @@ namespace Project
 			{
 				if (temp.value == item)
 				{
-					Console.WriteLine();
-					Console.Write(value: $"item {item} inside \n");
-					return;
+					return true;
 				}
 				temp = temp.next;
 			}
-			Console.WriteLine();
-			Console.Write(value: $"item {item} is absent \n");
+			return false;
 		}
 
 
-		public void Find(int item)
+		public int Find(int item)
 		{
 			if (IsEmpty)
 			{
-				Console.WriteLine("MyList is empty");
-				return;
+				return -1;
 			}
 
 			IntItem temp = first;
@@ -232,23 +286,19 @@ namespace Project
 			{
 				if (temp.value == item)
 				{
-					Console.WriteLine();
-					Console.Write(value: $"{item} has been finded \n");
-					return;
+					return i;
 				}
 				temp = temp.next;
 			}
-			Console.WriteLine();
-			Console.Write(value: $"{item} is not found \n");
+			return -1;
 		}
 
 
-		public void FindLast(int item)
+		public int FindLast(int item)
 		{
 			if (IsEmpty)
 			{
-				Console.WriteLine("MyList is empty");
-				return;
+				return -1;
 			}
 
 			IntItem temp = last;
@@ -256,68 +306,51 @@ namespace Project
 			{
 				if (temp.value == item)
 				{
-					Console.WriteLine();
-					Console.Write(value: $"{item} has been finded \n");
-					return;
+					return i;
 				}
 				temp = temp.prev;
 			}
-			Console.WriteLine();
-			Console.Write(value: $"{item} is not found \n");
+			return -1;
 		}
 
 
-		public void FindIndex(int index)
+		public int FindIndex(int item)
 		{
 			if (IsEmpty)
 			{
-				Console.WriteLine("MyList is empty");
-				return;
+				return -1;
 			}
 
-			IntItem item = first;
-			int count = 0;
-
+			IntItem temp = first;
 			for (int i = 0; i < Count; i++)
 			{
-				if (count == index)
+				if (temp.value == item)
 				{
-					Console.WriteLine();
-					Console.Write(value: $"inex: {index} item: {item} \n");
-					return;
+					return i;
 				}
-				item = item.next;
-				count++;
+				temp = temp.next;
 			}
-			Console.WriteLine();
-			Console.Write(value: $"index {index} not found \n");
+			return -1;
 		}
 
 
-		public void FindLastIndex(int index)
+		public int FindLastIndex(int item)
 		{
 			if (IsEmpty)
 			{
-				Console.WriteLine("MyList is empty");
-				return;
+				return -1;
 			}
 
-			IntItem item = last;
-			int count = Count - 1;
-
+			IntItem temp = last;
 			for (int i = Count; i > 0; i--)
 			{
-				if (count == index)
+				if (temp.value == item)
 				{
-					Console.WriteLine();
-					Console.Write(value: $"inex: {index} item: {item} \n");
-					return;
+					return i;
 				}
-				item = item.prev;
-				count--;
+				temp = temp.prev;
 			}
-			Console.WriteLine();
-			Console.Write(value: $"index {index} not found \n");
+			return -1;
 		}
 
 
@@ -339,7 +372,7 @@ namespace Project
 		//		{
 		//			Console.WriteLine();
 		//			Console.Write(value: $"{item} has been finded \n");
-					
+
 		//		}
 		//		temp = temp.next;
 		//	}
@@ -352,7 +385,6 @@ namespace Project
 		{
 			if (IsEmpty)
 			{
-				Console.WriteLine("MyList is empty");
 				return;
 			}
 
@@ -367,26 +399,21 @@ namespace Project
 		}
 
 
-		public void AddRange(int index, int item)
+		public void AddRange(IEnumerable<int> collection)
 		{
-			IntItem temp = first;
-			
-			for (int i = 0; i < index + 1; i++)
+			foreach (var item in collection)
 			{
-				temp.value = item;
-				temp = temp.next;
+				this.Add(item);
 			}
-
 		}
 
 
-		// TODO: AddRange(5);
-		// TODO: Clear();
-		// TODO: Contains(2);
-		// TODO: Find(2);
-		// TODO: FindIndex(-1);
-		// TODO: FindLast();
-		// TODO: FindLastIndex();
+
 		// TODO: FindAll();
+		// TODO: Reverse(); 
+		// TODO: Remove(); удалить по значению
+		// TODO: RemoveAll(); удалить все двойки
+		// TODO: RemoveRange(); индекс и сколько удалить после него
+		// TODO: GetRange(); индекс и сколько єлементов вернуть (возвращает коллекцию)
 	}
 }
