@@ -33,7 +33,8 @@ namespace Project
 
 			Console.WriteLine(a.ToString());
 
-			a.Remove(2);
+			//a.Remove(2);
+			a.RemoveAll(2);
 
 			Console.WriteLine(a.ToString());
 			Console.ReadKey();

@@ -108,6 +108,26 @@ namespace Project
 			return this;
 		}
 
+		public MyList RemoveAll(int value)
+		{
+			IntItem removed = first;
+
+			for (int i = 0; i < Count; i++)
+			{
+				IntItem temp = removed;
+
+				if (value == removed.value)
+				{
+					Remove(removed);
+					Count--;
+					//return this;
+				}
+				temp = temp.next;
+			}
+
+			return this;
+		}
+
 		public MyList RemoveAt(int index)
 		{
 			if (Count < index)
