@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 
 
-namespace Project
+namespace MyCollections
 {
     class Program
     {

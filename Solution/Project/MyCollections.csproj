@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IntItem.cs" />
+    <Compile Include="MyArrayList.cs" />
+    <Compile Include="MyBinaryTree.cs" />
     <Compile Include="MyList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

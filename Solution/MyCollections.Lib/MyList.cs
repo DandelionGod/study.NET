@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyCollections
+namespace MyCollections.Lib
 {
 	class MyList
 	{
@@ -30,9 +30,9 @@ namespace MyCollections
 			}
 		}
 
-		
+
 		public bool IsEmpty => Count == 0;
-		
+
 
 		public int Count { get; set; }
 
@@ -55,13 +55,13 @@ namespace MyCollections
 		}
 
 
-		
+
 
 		public MyList Remove(int value)
 		{
 			IntItem removed = first;
-			
-			
+
+
 
 			// remove from middle
 			for (int i = 0; i < Count; i++)
@@ -75,7 +75,7 @@ namespace MyCollections
 				removed = removed.next;
 			}
 
-			
+
 			return this;
 		}
 
@@ -407,4 +407,5 @@ namespace MyCollections
 		// TODO: RemoveRange(); индекс и сколько удалить после него
 		// TODO: GetRange(); индекс и сколько єлементов вернуть (возвращает коллекцию)
 	}
+
 }

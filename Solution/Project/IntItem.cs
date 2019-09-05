@@ -1,4 +1,4 @@
-﻿namespace Project
+﻿namespace MyCollections
 {
 	//interface IItem
 	//{
