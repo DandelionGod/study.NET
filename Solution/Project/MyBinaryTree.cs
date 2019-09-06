@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyCollections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,26 @@ using System.Threading.Tasks;
 
 namespace Project
 {
+	public class TreeNode
+	{
+		public TreeNode Left { get; set; }
+		public TreeNode Right { get; set; }
+
+		public IComparable Value { get; private set; }
+
+		public TreeNode(IComparable value)
+		{
+			Value = value;
+		}
+	}
+
+
 	class MyBinaryTree
 	{
 		public TreeNode Root { get; private set; }
 		public int Count { get; private set; }
 
-		public CoolBinaryTree()
+		public MyBinaryTree()
 		{
 			Count = 0;
 		}
@@ -85,17 +100,19 @@ namespace Project
 			if (Root == null)
 				return new object[0];
 
-			CoolList coolList = new CoolList();
-			ToArrayInner(coolList, Root);
-			return coolList.ToArray();
+			MyList myList = new MyList();
+			ToArrayInner(myList, Root);
+			return myList.ToArray();
 		}
 
-		private void ToArrayInner(CoolList coolList, TreeNode root)
+		private void ToArrayInner(MyList myList, TreeNode root)
 		{
 			if (root.Left != null)
-				ToArrayInner(coolList, root.Left);
-			coolList.Add(root.Value);
+				ToArrayInner(myList, root.Left);
+			myList.Add(root.Value);
 			if (root.Right != null)
-				ToArrayInner(coolList, root.Right);
+				ToArrayInner(myList, root.Right);
 		}
+
+	}
 }

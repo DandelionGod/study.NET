@@ -7,13 +7,13 @@
 	//}
 
 
-	class IntItem
+	class Item
 	{
-		public IntItem prev;
-		public IntItem next;
-		public int value;
+		public Item prev;
+		public Item next;
+		public object value;
 
-		public IntItem(int value)
+		public Item(object value)
 		{
 			this.value = value;
 		}

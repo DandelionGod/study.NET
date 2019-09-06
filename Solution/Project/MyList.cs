@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MyCollections
 {
-	class MyList
+	public class MyList
 	{
-		private IntItem last;
-		private IntItem first;
+		private Item last;
+		private Item first;
 
 
-		public int this[int index]
+		public object this[int index]
 		{
 			get
 			{
@@ -21,7 +21,7 @@ namespace MyCollections
 					throw new IndexOutOfRangeException();
 				}
 
-				IntItem temp = first;
+				Item temp = first;
 				for (int i = 0; i < index; i++)
 				{
 					temp = temp.next;
@@ -30,16 +30,16 @@ namespace MyCollections
 			}
 		}
 
-		
+
 		public bool IsEmpty => Count == 0;
-		
+
 
 		public int Count { get; set; }
 
 
-		public MyList Add(int item)
+		public MyList Add(object item)
 		{
-			IntItem temp = new IntItem(item);
+			Item temp = new Item(item);
 			if (last != null)
 			{
 				last.next = temp;
@@ -55,13 +55,13 @@ namespace MyCollections
 		}
 
 
-		
 
-		public MyList Remove(int value)
+
+		public MyList Remove(object value)
 		{
-			IntItem removed = first;
-			
-			
+			Item removed = first;
+
+
 
 			// remove from middle
 			for (int i = 0; i < Count; i++)
@@ -75,17 +75,17 @@ namespace MyCollections
 				removed = removed.next;
 			}
 
-			
+
 			return this;
 		}
 
-		public MyList RemoveAll(int value)
+		public MyList RemoveAll(object value)
 		{
-			IntItem removed = first;
+			Item removed = first;
 
 			for (int i = 0; i < Count; i++)
 			{
-				IntItem temp = removed;
+				Item temp = removed;
 
 				if (value == removed.value)
 				{
@@ -106,7 +106,7 @@ namespace MyCollections
 				return this;
 			}
 
-			IntItem removed = first;
+			Item removed = first;
 
 			//remove first
 			if (index == 0)
@@ -138,7 +138,7 @@ namespace MyCollections
 			return this;
 		}
 
-		private void Remove(IntItem removed)
+		private void Remove(Item removed)
 		{
 			if (removed == null)
 			{
@@ -170,7 +170,7 @@ namespace MyCollections
 		public override string ToString()
 		{
 			string s = "Collection: ";
-			IntItem temp = first;
+			Item temp = first;
 			for (int i = 0; i < Count; i++)
 			{
 				if (temp != null)
@@ -190,11 +190,11 @@ namespace MyCollections
 		public void Sort()
 		{
 			Console.WriteLine(this.ToString());
-			IntItem i = first;
+			Item i = first;
 
 			while (i != null)
 			{
-				IntItem j = first;
+				Item j = first;
 				while (j != null && j.next != null)
 				{
 					if (j.value > j.next.value)
@@ -209,9 +209,9 @@ namespace MyCollections
 		}
 
 
-		private void Swap(IntItem i, IntItem j)
+		private void Swap(Item i, Item j)
 		{
-			IntItem temp;
+			Item temp;
 			if (i.prev != null)
 			{
 				i.prev.next = j;
@@ -244,14 +244,14 @@ namespace MyCollections
 		}
 
 
-		public bool Contains(int item)
+		public bool Contains(object item)
 		{
 			if (IsEmpty)
 			{
 				return false;
 			}
 
-			IntItem temp = first;
+			Item temp = first;
 
 			for (int i = 0; i < Count; i++)
 			{
@@ -265,14 +265,14 @@ namespace MyCollections
 		}
 
 
-		public int Find(int item)
+		public object Find(object item)
 		{
 			if (IsEmpty)
 			{
 				return -1;
 			}
 
-			IntItem temp = first;
+			Item temp = first;
 			for (int i = 0; i < Count; i++)
 			{
 				if (temp.value == item)
@@ -285,14 +285,14 @@ namespace MyCollections
 		}
 
 
-		public int FindLast(int item)
+		public object FindLast(object item)
 		{
 			if (IsEmpty)
 			{
 				return -1;
 			}
 
-			IntItem temp = last;
+			Item temp = last;
 			for (int i = Count; i > 0; i--)
 			{
 				if (temp.value == item)
@@ -305,14 +305,14 @@ namespace MyCollections
 		}
 
 
-		public int FindIndex(int item)
+		public object FindIndex(object item)
 		{
 			if (IsEmpty)
 			{
 				return -1;
 			}
 
-			IntItem temp = first;
+			Item temp = first;
 			for (int i = 0; i < Count; i++)
 			{
 				if (temp.value == item)
@@ -325,14 +325,14 @@ namespace MyCollections
 		}
 
 
-		public int FindLastIndex(int item)
+		public object FindLastIndex(object item)
 		{
 			if (IsEmpty)
 			{
 				return -1;
 			}
 
-			IntItem temp = last;
+			Item temp = last;
 			for (int i = Count; i > 0; i--)
 			{
 				if (temp.value == item)
@@ -379,7 +379,7 @@ namespace MyCollections
 				return;
 			}
 
-			IntItem temp = first.next;
+			Item temp = first.next;
 			first = null;
 			for (int i = 0; i < Count - 1; i++)
 			{
@@ -390,7 +390,7 @@ namespace MyCollections
 		}
 
 
-		public void AddRange(IEnumerable<int> collection)
+		public void AddRange(IEnumerable<object> collection)
 		{
 			foreach (var item in collection)
 			{

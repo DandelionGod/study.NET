@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IntItem.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="MyArrayList.cs" />
     <Compile Include="MyBinaryTree.cs" />
     <Compile Include="MyList.cs" />
